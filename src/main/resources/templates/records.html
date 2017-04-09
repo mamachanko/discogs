@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Recordszzzz</title>
+</head>
+<body>
+<form action="#" th:object="${record}" method="post">
+    <div>
+        <label for="artistName">
+            Artist name:
+            <input type="text" th:field="*{artistName}"/>
+        </label>
+    </div>
+
+    <div>
+        <input type="submit"/>
+    </div>
+</form>
+<p th:if="${saved == true}">The record has been saved.</p>
+<p th:if="${saved == false}">There have been errors.</p>
+</body>
+</html>
