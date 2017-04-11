@@ -4,13 +4,10 @@ import org.hibernate.validator.constraints.NotBlank
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.stereotype.Controller
-import org.springframework.ui.ModelMap
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import javax.validation.Valid
-import javax.validation.constraints.NotNull
-import javax.validation.constraints.Size
 
 @SpringBootApplication
 class DiscogsApplication
@@ -28,7 +25,7 @@ class Web {
     }
 
     @PostMapping("/")
-    fun ingestRecord(@Valid record: Record, bindingResult: BindingResult, model: ModelMap): String {
+    fun ingestRecord(@Valid record: Record, bindingResult: BindingResult): String {
         return if (bindingResult.hasErrors()) {
             "records"
         } else {
@@ -38,7 +35,5 @@ class Web {
 
 }
 
-data class Record(
-        @NotBlank var artistName: String = ""
-)
+data class Record(@get:NotBlank var artistName: String = "")
 

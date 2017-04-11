@@ -8,8 +8,12 @@
 <form action="#" th:object="${record}" method="post">
     <div>
         <label for="artistName">
-            Artist name:
+            <div>Artist name:</div>
             <input type="text" th:field="*{artistName}"/>
+            <div th:if="${#fields.hasErrors('artistName')}"
+               th:errors="*{artistName}">
+                Artist name error
+            </div>
         </label>
     </div>
 
