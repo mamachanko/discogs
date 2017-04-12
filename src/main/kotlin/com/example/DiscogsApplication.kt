@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotBlank
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.stereotype.Controller
+import org.springframework.ui.ModelMap
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -20,13 +21,15 @@ fun main(args: Array<String>) {
 class Web {
 
     @GetMapping("/")
-    fun getRecordForm(record: Record): String {
+    fun getRecordForm(record: Record, model: ModelMap): String {
+        model["possibleRecordConditions"] = RecordCondition.values().map { it.name }
         return "records"
     }
 
     @PostMapping("/")
-    fun ingestRecord(@Valid record: Record, bindingResult: BindingResult): String {
+    fun ingestRecord(@Valid record: Record, bindingResult: BindingResult, model: ModelMap): String {
         return if (bindingResult.hasErrors()) {
+            model["possibleRecordConditions"] = RecordCondition.values().map { it.name }
             "records"
         } else {
             "results"
@@ -35,5 +38,12 @@ class Web {
 
 }
 
-data class Record(@get:NotBlank var artistName: String = "")
+data class Record(
+        @get:NotBlank var artistName: String = "",
+        var recordCondition: RecordCondition = RecordCondition.VeryGood
+)
+
+enum class RecordCondition {
+    Mint, NearMint, VeryGood, Good, Worn
+}
 

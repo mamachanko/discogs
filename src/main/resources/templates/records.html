@@ -15,6 +15,18 @@
                 Artist name error
             </div>
         </label>
+        <label for="recordCondition">
+            <div>Record condition:</div>
+            <select th:field="*{recordCondition}">
+                <option th:each="recordCondition : ${possibleRecordConditions}"
+                        th:value="${recordCondition}"
+                        th:text="${recordCondition}">Record condition</option>
+            </select>
+            <div th:if="${#fields.hasErrors('recordCondition')}"
+               th:errors="*{recordCondition}">
+                Record condition error
+            </div>
+        </label>
     </div>
 
     <div>
