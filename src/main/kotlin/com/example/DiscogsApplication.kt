@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import javax.validation.Valid
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
 @SpringBootApplication
@@ -24,6 +25,7 @@ class Web {
     @GetMapping("/")
     fun getRecordForm(record: Record, model: ModelMap): String {
         model["possibleRecordConditions"] = RecordCondition.values().map { it.name }
+        model["possibleRecordFormats"] = RecordFormat.values().map { it.name }
         return "records"
     }
 
@@ -31,6 +33,7 @@ class Web {
     fun ingestRecord(@Valid record: Record, bindingResult: BindingResult, model: ModelMap): String {
         return if (bindingResult.hasErrors()) {
             model["possibleRecordConditions"] = RecordCondition.values().map { it.name }
+            model["possibleRecordFormats"] = RecordFormat.values().map { it.name }
             "records"
         } else {
             "results"
@@ -49,10 +52,16 @@ data class Record(
         )
         var matrixNumber: String = "",
 
-        var recordCondition: RecordCondition = RecordCondition.VeryGood
+        var recordCondition: RecordCondition = RecordCondition.VeryGood,
+
+        @get:NotNull
+        var recordFormat: RecordFormat? = null
 )
 
 enum class RecordCondition {
     Mint, NearMint, VeryGood, Good, Worn
 }
 
+enum class RecordFormat() {
+    SevenInch, TenInch, TwelveInch
+}

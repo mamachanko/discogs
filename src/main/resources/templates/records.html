@@ -48,6 +48,23 @@
 
         <div class="field">
 
+            <label for="recordFormat">
+                <div>Format:</div>
+                <ul>
+                    <li th:each>
+                        <input type="radio" th:field="*{recordFormat}" />
+                    </li>
+                </ul>
+                <div th:if="${#fields.hasErrors('recordFormat')}"
+                     th:errors="*{recordFormat}">
+                    Format error
+                </div>
+            </label>
+
+        </div>
+
+        <div class="field">
+
             <label for="recordCondition">
                 <div>Record condition:</div>
                 <select th:field="*{recordCondition}">
