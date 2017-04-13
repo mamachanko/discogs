@@ -43,7 +43,10 @@ data class Record(
         @get:NotBlank(message = "The artist's name may not be empty.")
         var artistName: String = "",
 
-        @get:Pattern(regexp = "[a-zA-Z0-9]+")
+        @get:Pattern(
+                regexp = "mx-[a-zA-Z0-9]+",
+                message = "The matrix number should start with `mx-` followed by alphanumeric characters."
+        )
         var matrixNumber: String = "",
 
         var recordCondition: RecordCondition = RecordCondition.VeryGood
