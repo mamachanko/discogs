@@ -3,16 +3,35 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Recordszzzz</title>
+    <style>
+        .error {
+            border-color: indianred;
+            border-style: solid;
+            border-width: 1px;
+        }
+    </style>
 </head>
 <body>
 <form action="#" th:object="${record}" method="post">
     <div>
         <label for="artistName">
             <div>Artist name:</div>
-            <input type="text" th:field="*{artistName}"/>
+            <input type="text"
+                   th:field="*{artistName}"
+                   th:class="${#fields.hasErrors('artistName')}? error"/>
             <div th:if="${#fields.hasErrors('artistName')}"
-               th:errors="*{artistName}">
+                 th:errors="*{artistName}">
                 Artist name error
+            </div>
+        </label>
+        <label for="matrixNumber">
+            <div>Matrix number:</div>
+            <input type="text"
+                   th:field="*{matrixNumber}"
+                   th:errorclass="error"/>
+            <div th:if="${#fields.hasErrors('matrixNumber')}"
+                 th:errors="*{matrixNumber}">
+                Matrix number error
             </div>
         </label>
         <label for="recordCondition">
@@ -20,10 +39,11 @@
             <select th:field="*{recordCondition}">
                 <option th:each="recordCondition : ${possibleRecordConditions}"
                         th:value="${recordCondition}"
-                        th:text="${recordCondition}">Record condition</option>
+                        th:text="${recordCondition}">Record condition
+                </option>
             </select>
             <div th:if="${#fields.hasErrors('recordCondition')}"
-               th:errors="*{recordCondition}">
+                 th:errors="*{recordCondition}">
                 Record condition error
             </div>
         </label>

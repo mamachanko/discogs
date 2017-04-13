@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import javax.validation.Valid
+import javax.validation.constraints.Pattern
 
 @SpringBootApplication
 class DiscogsApplication
@@ -39,7 +40,12 @@ class Web {
 }
 
 data class Record(
-        @get:NotBlank var artistName: String = "",
+        @get:NotBlank(message = "The artist's name may not be empty.")
+        var artistName: String = "",
+
+        @get:Pattern(regexp = "[a-zA-Z0-9]+")
+        var matrixNumber: String = "",
+
         var recordCondition: RecordCondition = RecordCondition.VeryGood
 )
 
